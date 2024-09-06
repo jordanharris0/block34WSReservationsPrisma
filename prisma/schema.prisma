@@ -12,3 +12,24 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Customer {
+  id Int @id @default(autoincrement())
+  name String
+  resevations Reservation[]
+}
+
+model Place {
+  id Int @id @default(autoincrement())
+  name String
+  resevations Reservation[]
+}
+model Reservation {
+  id Int @id @default(autoincrement())
+  date DateTime
+  partyCount Int
+  customer Customer @relation(fields: [customerId], references: [id])
+  customerId Int
+  place Place @relation(fields: [placeId], references: [id])
+  placeId Int
+}
